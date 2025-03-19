@@ -1,0 +1,19 @@
+local Engine = script.Parent.Parent.Engine.BodyThrust
+local SForce = script.Parent.Parent.Steer.BodyAngularVelocity
+local DSeat = script.Parent
+local Base = script.Parent.Parent.Base
+
+speed = 2000
+SteerSpeed = 2
+BaseDensity = 0.05
+
+DSeat.Changed:Connect(function(p)
+	if p == "ThrottleFloat"then
+		Engine.Force = Vector3.new(0,0,speed * DSeat.ThrottleFloat)
+	end
+	if p == "SteerFloat"then
+		SForce.AngularVelocity = Vector3.new(0,-SteerSpeed*DSeat.SteerFloat,0)
+	end
+end)
+
+Base.CustomPhysicalProperties = PhysicalProperties.new(BaseDensity,0,0)
